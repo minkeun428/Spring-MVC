@@ -3,6 +3,7 @@ package com.spring.mvc.board.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,6 +30,16 @@ public class BoardController {
 		model.addAttribute("boardList", boardService.list());
 		
 		return "/board/list";
+	}
+	
+	@RequestMapping(value="/board/read/{seq}")
+	//{seq}처럼 경로 변수를 메서드의 인자로 사용하려면 @PathVariable 어노테이션이 필요함.
+	//기존에 request.getParameter("seq")를 다시 Int형으로 변환하는 지루한 작업을 
+	//스프링 MVC가 대신 처리해주는 것.
+	public String read(Model model, @PathVariable int seq) {
+		model.addAttribute("boardVO", boardService.read(seq));
+		
+		return "/board/read";
 	}
 
 }
