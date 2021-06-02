@@ -5,8 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.spring.mvc.board.domain.BoardVO;
 import com.spring.mvc.board.service.BoardService;
 
 
@@ -40,6 +41,20 @@ public class BoardController {
 		model.addAttribute("boardVO", boardService.read(seq));
 		
 		return "/board/read";
+	}
+	
+	@RequestMapping(value="/board/write", method=RequestMethod.GET)
+	public String write() {
+		
+		return "/board/write";
+	}
+	
+	@RequestMapping(value="/board/write", method=RequestMethod.POST)
+	public String write(BoardVO boardVO) {
+		
+		boardService.write(boardVO);
+		
+		return "/board/write";
 	}
 
 }
